@@ -27,11 +27,11 @@ node<type>* tail_ptr;
 template<typename type>
 void list_head_insert(node<type>*& head_ptr, const type entry) {
 	node<type>* newnode = new node<type>(entry);
-	if (head_ptr == NULL)// ¾Æ¹« ³ëµåµµ ¾øÀ»¶§
+	if (head_ptr == NULL)// ì•„ë¬´ ë…¸ë“œë„ ì—†ì„ë•Œ
 		tail_ptr<type> = NULL;
 	else {
-		newnode->set_next(head_ptr);//»õ·Î¿î ³ëµå°¡ °¡¸®Å°´Â next-> ¿ø·¡ head_ptr°¡ °¡¸®Å°´ø ³ëµå.
-		head_ptr->set_prev(newnode);// ¿ø·¡ ¾Õ¿¡ÀÖ´ø nodeÀÇ prev==null¿¡¼­ newnode¸¦ °¡¸®Å°µµ·Ï.
+		newnode->set_next(head_ptr);//ìƒˆë¡œìš´ ë…¸ë“œê°€ ê°€ë¦¬í‚¤ëŠ” next-> ì›ë˜ head_ptrê°€ ê°€ë¦¬í‚¤ë˜ ë…¸ë“œ.
+		head_ptr->set_prev(newnode);// ì›ë˜ ì•ì—ìˆë˜ nodeì˜ prev==nullì—ì„œ newnodeë¥¼ ê°€ë¦¬í‚¤ë„ë¡.
 	}
 	head_ptr = newnode;
 }
