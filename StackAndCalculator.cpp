@@ -11,12 +11,12 @@ using namespace std;
 template<class item>
 class stack {
 private:
-	node<item>* top_ptr;//stackÀÇ top
+	node<item>* top_ptr;//stackì˜ top
 public:
-	stack() {//±âº»»ı¼ºÀÚ 
+	stack() {//ê¸°ë³¸ìƒì„±ì 
 		top_ptr = NULL;
 	}
-	stack(const stack<item>& source) {//º¹»ç»ı¼ºÀÚ
+	stack(const stack<item>& source) {//ë³µì‚¬ìƒì„±ì
 		node<item>* tail_ptr;
 		list_copy(source.top_ptr, top_ptr, tail_ptr);
 	}
@@ -27,19 +27,19 @@ public:
 };
 template<class item>
 void stack<item>::push(const item& entry) {
-	list_head_insert(top_ptr, entry);//listÀÇ head°¡ stackÀÇ topÀÌ µÊ.
+	list_head_insert(top_ptr, entry);//listì˜ headê°€ stackì˜ topì´ ë¨.
 }
 template<class item>
-void stack<item>::pop() {//stackÀÇ topÀ» Á¦°ÅÇÏ·Á¸é listÀÇ head¸¦ Á¦°ÅÇÏ¸é µÈ´Ù.
+void stack<item>::pop() {//stackì˜ topì„ ì œê±°í•˜ë ¤ë©´ listì˜ headë¥¼ ì œê±°í•˜ë©´ ëœë‹¤.
 	assert(!empty());
 	list_head_remove(top_ptr);
 }
 template<class item>
-bool stack<item>::empty()const {//stackÀÌ ºñ¾ú´ÂÁö È®ÀÎ
+bool stack<item>::empty()const {//stackì´ ë¹„ì—ˆëŠ”ì§€ í™•ì¸
 	return top_ptr == NULL;
 }
 template<class item>
-item stack<item>::top() const {//stackÀÇ topÀÇ °ªÀ» ¹İÈ¯ÇÑ´Ù.
+item stack<item>::top() const {//stackì˜ topì˜ ê°’ì„ ë°˜í™˜í•œë‹¤.
 	assert(!empty());
 	return top_ptr->get_data();
 }
@@ -49,7 +49,7 @@ public:
 	string convert_to_postfix(string s);
 	double evaluate_postfix(string s);
 };
-int get_precedence(char a) {//¿ì¼±¼øÀ§¸¦ Á¤ÇÑ´Ù.
+int get_precedence(char a) {//ìš°ì„ ìˆœìœ„ë¥¼ ì •í•œë‹¤.
 	switch (a) {
 	case'(': case')': return 0;
 	case'+': case'-': return 1;
@@ -57,7 +57,7 @@ int get_precedence(char a) {//¿ì¼±¼øÀ§¸¦ Á¤ÇÑ´Ù.
 	}
 	return -1;
 }
-bool is_operand(char a) {// ÇÇ¿¬»êÀÚÀÎÁö È®ÀÎ.
+bool is_operand(char a) {// í”¼ì—°ì‚°ìì¸ì§€ í™•ì¸.
 	if (isdigit(a) || (a >= 'a' && a <= 'z') || (a >= 'A' && a <='Z') || a == '.')
 		return true;
 	return false;
@@ -74,7 +74,7 @@ bool is_operator(char a) {
 }
 string evaluator::read_expression() {
 	string expre;
-	cout << "¼ö½ÄÀ» ÀÔ·ÂÇÏ½Ã¿À : ";
+	cout << "ìˆ˜ì‹ì„ ì…ë ¥í•˜ì‹œì˜¤ : ";
 	cin >> expre;
 	return expre;
 }
@@ -86,37 +86,37 @@ string evaluator::convert_to_postfix(string infix) {
 	int i = 0;
 	int length = infix.length();
 	while(i<length){
-		if (is_operand(infix[i])) {//ÇÇ¿¬»êÀÚ¸¦ ¼Ò¼ö,º¯¼ö,¼ıÀÚ·Î ÁöÁ¤ÇØ³õ´Â´Ù.
-			while (is_operand(infix[i])&&(i<length)) {//ÀÚ¸´¼ö¸¦ ±¸º°ÇØÁÖ±â À§ÇØ ¿¬»êÀÚ°¡ ³ª¿À±â Àü±îÁö ±×³É Ãâ·ÂÇÑ´Ù.
+		if (is_operand(infix[i])) {//í”¼ì—°ì‚°ìë¥¼ ì†Œìˆ˜,ë³€ìˆ˜,ìˆ«ìë¡œ ì§€ì •í•´ë†“ëŠ”ë‹¤.
+			while (is_operand(infix[i])&&(i<length)) {//ìë¦¿ìˆ˜ë¥¼ êµ¬ë³„í•´ì£¼ê¸° ìœ„í•´ ì—°ì‚°ìê°€ ë‚˜ì˜¤ê¸° ì „ê¹Œì§€ ê·¸ëƒ¥ ì¶œë ¥í•œë‹¤.
 				postfix.push_back(infix[i]);
 				i++;
 			}
-			postfix.push_back(' ');//¸ğµÎ Ãâ·ÂÇÑµÚ °ø¹éÀ» ÅëÇØ ±¸ºĞÇØÁØ´Ù.
+			postfix.push_back(' ');//ëª¨ë‘ ì¶œë ¥í•œë’¤ ê³µë°±ì„ í†µí•´ êµ¬ë¶„í•´ì¤€ë‹¤.
 		}
-		else if (infix[i] == '(') {//ÁÂ°ıÈ£°¡ ³ª¿Ã ½Ã stack¿¡ push
+		else if (infix[i] == '(') {//ì¢Œê´„í˜¸ê°€ ë‚˜ì˜¬ ì‹œ stackì— push
 			stack.push(infix[i]);
 			i++;
 		}
-		else if (infix[i] == ')') {//¿ì°ıÈ£°¡ ³ª¿À´Â °æ¿ì.
-			while (stack.top() != '(') {// ÁÂ°ıÈ£°¡ ³ª¿À±âÀü±îÁö
-				postfix.push_back(stack.top());//stack ¿¡ ³²¾ÆÀÖ´Â ¸ğµç ¿¬»êÀÚµéÀ» Ãâ·ÂÇØÁØ´Ù.
-				stack.pop();//±×¸®°í pop
-				postfix.push_back(' ');//°ø¹éÀ¸·Î ±¸ºĞÇØÁÜ.
+		else if (infix[i] == ')') {//ìš°ê´„í˜¸ê°€ ë‚˜ì˜¤ëŠ” ê²½ìš°.
+			while (stack.top() != '(') {// ì¢Œê´„í˜¸ê°€ ë‚˜ì˜¤ê¸°ì „ê¹Œì§€
+				postfix.push_back(stack.top());//stack ì— ë‚¨ì•„ìˆëŠ” ëª¨ë“  ì—°ì‚°ìë“¤ì„ ì¶œë ¥í•´ì¤€ë‹¤.
+				stack.pop();//ê·¸ë¦¬ê³  pop
+				postfix.push_back(' ');//ê³µë°±ìœ¼ë¡œ êµ¬ë¶„í•´ì¤Œ.
 			}
-			stack.pop();//ÁÂ°ıÈ£µµ Áö¿ö¾ßÇÏ±â¶§¹®¿¡ pop ÇÑ¹ø ´õ.
+			stack.pop();//ì¢Œê´„í˜¸ë„ ì§€ì›Œì•¼í•˜ê¸°ë•Œë¬¸ì— pop í•œë²ˆ ë”.
 			i++;
 		}
-		else if (infix[i] == '+' || infix[i] == '-' || infix[i] == '*' || infix[i] == '/') {//¿¬»êÀÚ°¡ ³ª¿À´Â °æ¿ì
-			while (!stack.empty() && (get_precedence(infix[i]) <= get_precedence(stack.top()))){// stackÀÌ ºñ¾îÀÖÁö ¾Ê°í stack¿¡ ÀÖ´Â ¿¬»êÀÚ°¡ µé¾î¿À´Â ¿¬»êÀÚº¸´Ù ¿ì¼±¼øÀ§°¡ ³ôÀº°æ¿ì
-				postfix.push_back(stack.top());//stack¿¡ ³²¾ÆÀÖ´ø ¿¬»êÀÚ¸¦ Ãâ·ÂÇÑ´Ù
-				postfix.push_back(' ');//°ø¹éÀ¸·Î ±¸ºĞ
-				stack.pop();//³²¾ÆÀÖ´ø ¿¬»êÀÚ¸¦ Á¦°Å
+		else if (infix[i] == '+' || infix[i] == '-' || infix[i] == '*' || infix[i] == '/') {//ì—°ì‚°ìê°€ ë‚˜ì˜¤ëŠ” ê²½ìš°
+			while (!stack.empty() && (get_precedence(infix[i]) <= get_precedence(stack.top()))){// stackì´ ë¹„ì–´ìˆì§€ ì•Šê³  stackì— ìˆëŠ” ì—°ì‚°ìê°€ ë“¤ì–´ì˜¤ëŠ” ì—°ì‚°ìë³´ë‹¤ ìš°ì„ ìˆœìœ„ê°€ ë†’ì€ê²½ìš°
+				postfix.push_back(stack.top());//stackì— ë‚¨ì•„ìˆë˜ ì—°ì‚°ìë¥¼ ì¶œë ¥í•œë‹¤
+				postfix.push_back(' ');//ê³µë°±ìœ¼ë¡œ êµ¬ë¶„
+				stack.pop();//ë‚¨ì•„ìˆë˜ ì—°ì‚°ìë¥¼ ì œê±°
 			}
-			stack.push(infix[i]);//ÀÌÈÄ µé¾î¿À·Á´Â ¿¬»êÀÚ¸¦ stack¿¡ push
+			stack.push(infix[i]);//ì´í›„ ë“¤ì–´ì˜¤ë ¤ëŠ” ì—°ì‚°ìë¥¼ stackì— push
 			i++;
 		}
-		if ((i == length) && (!stack.empty())) {//¸Ç ¸¶Áö¸·
-			while (!stack.empty()) {//½ºÅÃÀÌ ºñ¾îÀÖÁö ¾ÊÀº°æ¿ì ½ºÅÃÀÇ ¸ğµç ¿¬»êÀÚ¸¦ popÇÔ.
+		if ((i == length) && (!stack.empty())) {//ë§¨ ë§ˆì§€ë§‰
+			while (!stack.empty()) {//ìŠ¤íƒì´ ë¹„ì–´ìˆì§€ ì•Šì€ê²½ìš° ìŠ¤íƒì˜ ëª¨ë“  ì—°ì‚°ìë¥¼ popí•¨.
 				postfix.push_back(stack.top());
 				postfix.push_back(' ');
 				stack.pop();
@@ -128,30 +128,30 @@ string evaluator::convert_to_postfix(string infix) {
 double evaluator::evaluate_postfix(string postfix) {
 	stack<double> operand;
 	stack<char> operat;
-	string num="";//ºĞ¸®ÇÑ ¼ö¸¦ ³ÖÀ» string º¯¼ö.
+	string num="";//ë¶„ë¦¬í•œ ìˆ˜ë¥¼ ë„£ì„ string ë³€ìˆ˜.
 	int i = 0;
 	int length = postfix.length();
 	double oper1, oper2;
 	while (i < length) {
-		if (is_operand(postfix[i])) {//postfix¿¡¼­ ¼ıÀÚ¸¦ ºĞ¸®ÇÏ´Â ÀÛ¾÷.
+		if (is_operand(postfix[i])) {//postfixì—ì„œ ìˆ«ìë¥¼ ë¶„ë¦¬í•˜ëŠ” ì‘ì—….
 			while (is_operand(postfix[i]) && postfix[i] != ' ') {
 				num.push_back(postfix[i]);
 				i++;
 			}
-			if ((num[0] >= '0' && num[0] <= '9') || num[0] == '.')//¼ıÀÚÀÎ°æ¿ì
+			if ((num[0] >= '0' && num[0] <= '9') || num[0] == '.')//ìˆ«ìì¸ê²½ìš°
 				operand.push(stod(num));
-			else if (is_variable(num[0])) {//º¯¼öÀÎ°æ¿ì, º¯¼ö¸¦ ¾î¶»°Ô ¼³Á¤ÇÒ Áö ¹°¾îº¸°í º¯¼ö °ªÀ» ¼³Á¤ÇÑ´Ù.
-				cout << num[0] << "ÀÇ °ªÀ» Á¤ÇÏ½Ã¿À :";
+			else if (is_variable(num[0])) {//ë³€ìˆ˜ì¸ê²½ìš°, ë³€ìˆ˜ë¥¼ ì–´ë–»ê²Œ ì„¤ì •í•  ì§€ ë¬¼ì–´ë³´ê³  ë³€ìˆ˜ ê°’ì„ ì„¤ì •í•œë‹¤.
+				cout << num[0] << "ì˜ ê°’ì„ ì •í•˜ì‹œì˜¤ :";
 				cin >> num;
 				operand.push(stod(num));
 			}
 			num.clear();
 		}
-		else if (is_operator(postfix[i])) {//Âß Åy¾îº¸´Ù°¡ ¿¬»êÀÚ°¡ ³ªÅ¸³¯ ¶§
-			oper1 = operand.top();// infix ±âÁØ: ¿¬»êÀÚ ¿À¸¥ÂÊ¿¡ ¿À´Â ÇÇ¿¬»êÀÚ.
-			operand.pop();//operand stack¿¡¼­ Á¦°Å
-			oper2 = operand.top();// infix ±âÁØ : ¿¬»êÀÚ ¿ŞÂÊ¿¡ ¿À´Â ÇÇ¿¬»êÀÚ.
-			operand.pop();//operand stack¿¡¼­ Á¦°Å
+		else if (is_operator(postfix[i])) {//ì­‰ yì–´ë³´ë‹¤ê°€ ì—°ì‚°ìê°€ ë‚˜íƒ€ë‚  ë•Œ
+			oper1 = operand.top();// infix ê¸°ì¤€: ì—°ì‚°ì ì˜¤ë¥¸ìª½ì— ì˜¤ëŠ” í”¼ì—°ì‚°ì.
+			operand.pop();//operand stackì—ì„œ ì œê±°
+			oper2 = operand.top();// infix ê¸°ì¤€ : ì—°ì‚°ì ì™¼ìª½ì— ì˜¤ëŠ” í”¼ì—°ì‚°ì.
+			operand.pop();//operand stackì—ì„œ ì œê±°
 			if(postfix[i]=='+')
 				operand.push(oper1 + oper2);
 			else if (postfix[i] == '-')
@@ -175,7 +175,7 @@ int main() {
 		cout << "infix -> " << infix << endl;
 		cout << "postfix-> " << postfix << endl;
 		cout<<"evaluate postfix"<<a.evaluate_postfix(postfix)<<endl;
-		cout << "Á¾·áÇÏ°í ½ÍÀ¸¸é q ÀÔ·Â °è¼Ó ÇÒ °Å¸é ¾Æ¹«°Å³ª ÀÔ·Â";
+		cout << "ì¢…ë£Œí•˜ê³  ì‹¶ìœ¼ë©´ q ì…ë ¥ ê³„ì† í•  ê±°ë©´ ì•„ë¬´ê±°ë‚˜ ì…ë ¥";
 		char b;
 		cin >> b;
 		if (b == 'q') { break; }
