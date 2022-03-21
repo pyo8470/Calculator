@@ -1,6 +1,6 @@
 #include<iostream>
 #include<assert.h>
-#include"Liist.h"
+#include"doubleLinkedList.h"
 #include<cctype>
 #include<string>
 #ifdef _MSC_VER
